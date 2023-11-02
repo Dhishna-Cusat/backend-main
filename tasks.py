@@ -67,7 +67,7 @@ def fetch_and_update():
 
     # Iterate through the selected data
     for registration in selected_data:
-        cas = CA.objects.filter(referral=registration.referral)
+        cas = CA.objects.filter(referral__iexact=registration.referral)
         if cas:
             ca = cas[0]
             ca.points = registration.total_tickets_sold
