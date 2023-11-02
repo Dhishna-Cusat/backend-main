@@ -165,7 +165,7 @@ EMAIL_USE_TLS = True
 
 
 if os.environ.get('EMAIL_ACCOUNT_USER1') is None or os.environ.get('EMAIL_ACCOUNT_PASSWORD1') is None:
-    sys.exit("set environment variables EMAIL_ACCOUNT_USER1 and EMAIL_ACCOUNT_PASSWORD1")
+    print("set environment variables EMAIL_ACCOUNT_USER1 and EMAIL_ACCOUNT_PASSWORD1")
 
 EMAIL_HOST_USER_ACCOUNT1 = os.environ.get('EMAIL_ACCOUNT_USER1')
 
