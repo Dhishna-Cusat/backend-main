@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -155,3 +156,17 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(minutes=30),  # Adjust the interval as needed
     },
 }
+
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'smtppro.zoho.in'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True
+
+
+if os.environ.get('EMAIL_ACCOUNT_USER1') is None or os.environ.get('EMAIL_ACCOUNT_PASSWORD1') is None:
+    sys.exit("set environment variables EMAIL_ACCOUNT_USER1 and EMAIL_ACCOUNT_PASSWORD1")
+
+EMAIL_HOST_USER_ACCOUNT1 = os.environ.get('EMAIL_ACCOUNT_USER1')
+
+EMAIL_HOST_PASSWORD_ACCOUNT1 =  os.environ.get('EMAIL_ACCOUNT_PASSWORD1')

@@ -8,18 +8,41 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-
+from django.conf import settings
 from .models import Event, CA
 from .serializer import CASerializer
+from django.core.mail import send_mail
 
 
-def test_view(request):
-    # print(request.firebase_user['uid'])
-    today = timezone.now()  # Get the current date and time
-    events = Event.objects.filter(end_date__gt=today)
-    for event in events:
-        print(event.yep_id)
-    return HttpResponse("Hello, this is my route!")
+def send_ca_mail(name, email):
+    subject = 'Thank You for Becoming a Dhishna Campus Ambassador!'
+    message = f"""Dear {name},
+
+A big thank you for joining us as a Dhishna Campus Ambassador! Your support means the world to us and we're thrilled to have you on board.
+
+Your role as a Campus Ambassador is vital in spreading the word about our event, sharing our vision, and inspiring others to get involved. Your passion and dedication will play a significant role in making Dhishna '23 a grand success.
+
+We are outlining expected duties of a Dhishna Campus Ambassador:
+- Campus ambassadors act as liaisons between their organization and the college community.
+- They spread awareness about products, services, and opportunities offered by the organization.
+- Ambassadors often organize events and engage in recruitment activities on campus.
+- Providing feedback and insights to the organization helps improve their offerings.
+- This role allows students to gain practical experience in marketing and networking.
+- It also helps students build valuable relationships for future career opportunities.
+
+If you have questions or ideas, we're here to help. Let's make Dhishna '23 unforgettable together!
+
+Best regards,
+Dhishna '23 Team."""
+
+    from_email = 'ca@dhishna.org'
+    recipient_list = [email]
+
+    send_mail(subject, message, from_email, recipient_list,
+              fail_silently=False, auth_user=settings.EMAIL_HOST_USER_ACCOUNT1, auth_password=settings.EMAIL_HOST_PASSWORD_ACCOUNT1)
+
+
+
 
 @api_view(['POST'])
 def get_referral(request):
@@ -58,6 +81,7 @@ class CACreateViewSet(viewsets.ModelViewSet):
             if serializer.is_valid():
                 # Save the CA object
                 serializer.save()
+                send_ca_mail(request.data['name'], request.data['email'])
                 return Response({"message": "created"}, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
