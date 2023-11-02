@@ -18,7 +18,6 @@ from home.models import Event, Registration, CA
 # Set the Django settings module
 
 
-@shared_task
 def fetch_and_update():
     today = timezone.now()
     events = Event.objects.filter(end_date__gt=today)
@@ -75,4 +74,4 @@ def fetch_and_update():
 
 
 if __name__ == "__main__":
-    pass
+    fetch_and_update()
