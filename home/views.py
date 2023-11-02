@@ -1,17 +1,16 @@
-from django.utils import timezone
-from rest_framework import viewsets, status
-from django.http import Http404
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.conf import settings
-from django.contrib.staticfiles.views import serve
-from rest_framework.response import Response
-from django.http import HttpResponse, JsonResponse
-from .models import Event, CA
-from .serializer import CASerializer
 import random
 import string
+from rest_framework.decorators import api_view
+from django.conf import settings
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 
-
+from .models import Event, CA
+from .serializer import CASerializer
 
 
 def test_view(request):
@@ -21,6 +20,28 @@ def test_view(request):
     for event in events:
         print(event.yep_id)
     return HttpResponse("Hello, this is my route!")
+
+@api_view(['POST'])
+def get_referral(request):
+    if hasattr(request, 'firebase_user') and request.firebase_user:
+        id = request.firebase_user['user_id']
+
+        ca = get_object_or_404(CA, id=id)
+        return JsonResponse({'referral': ca.referral})
+
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['GET'])
+def get_points(request):
+    if hasattr(request, 'firebase_user') and request.firebase_user:
+        id = request.firebase_user['user_id']
+
+        ca = get_object_or_404(CA, id=id)
+        return JsonResponse({'points': ca.points})
+
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CACreateViewSet(viewsets.ModelViewSet):
@@ -42,8 +63,6 @@ class CACreateViewSet(viewsets.ModelViewSet):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-
 
     def list(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)

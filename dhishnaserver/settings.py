@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!6q()h)8ka7f+x&l!rg0i7=84fts%ahr%&uq^3!k0xr6*r&bjl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.dhishna.org', '54.174.47.3']
+ALLOWED_HOSTS = ['api.dhishna.org', '54.174.47.3', '127.0.0.1']
 
 # Application definition
 
@@ -56,7 +56,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://127.0.0.1:8000",
-    'http://localhost:3000',
+    "http://localhost:3000",
     "https://dhishna.org",
     "https://ca.dhishna.org",
     "https://workshops.dhishna.org",
@@ -66,6 +66,8 @@ CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 
 # Allow cookies to be included in cross-origin requests
 CORS_ALLOW_CREDENTIALS = True
+
+
 
 ROOT_URLCONF = 'dhishnaserver.urls'
 

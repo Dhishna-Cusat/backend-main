@@ -7,6 +7,8 @@ from .views import CACreateViewSet
 router = DefaultRouter()
 router.register(r'ca', CACreateViewSet)
 
+
 urlpatterns = [
-    path('test/', views.test_view, name='my_route'),
-] + router.urls
+    path('ca/getref', views.get_referral, name='get_referral'),
+    path('ca/points', views.get_points, name='get_points'),
+              ] + router.urls

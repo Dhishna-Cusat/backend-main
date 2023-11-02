@@ -19,11 +19,13 @@ class CA(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     phone = models.CharField(max_length=15)
-    verification = models.FileField(upload_to='protected-static/verification_files/')
+    verification = models.FileField(upload_to='protected-static/verification_files/', blank=True)
     verified = models.BooleanField(default=False)
     college = models.CharField(max_length=255)
     referral = models.CharField(max_length=255, blank=True, null=True)
-    year = models.IntegerField()
+    year = models.CharField(max_length=50)
+    old_verification = models.CharField(max_length=255, blank=True)
+    points = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
