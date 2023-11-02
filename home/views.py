@@ -90,5 +90,5 @@ def protected_serve(request, path, document_root=None, show_indexes=False):
     response = HttpResponse()
     # Content-type will be detected by nginx
     del response['Content-Type']
-    response['X-Accel-Redirect'] = '/protected-static/' + path
+    response['X-Accel-Redirect'] = '/protected/' + path
     return response
