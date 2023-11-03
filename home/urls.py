@@ -10,4 +10,6 @@ router.register(r'ca', CACreateViewSet)
 urlpatterns = [
                   path('ca/getref', views.get_referral, name='get_referral'),
                   path('ca/points', views.get_points, name='get_points'),
+                  path('ca/topten', views.get_top_ten, name='get_topten'),
+
               ] + router.urls
