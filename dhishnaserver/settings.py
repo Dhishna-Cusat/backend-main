@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!6q()h)8ka7f+x&l!rg0i7=84fts%ahr%&uq^3!k0xr6*r&bjl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DHISHNA_DEBUG'))
 
 ALLOWED_HOSTS = ['api.dhishna.org', '54.174.47.3', '127.0.0.1']
 
