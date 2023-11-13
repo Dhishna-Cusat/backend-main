@@ -74,7 +74,7 @@ def get_top_ten(request):
         for ca in cas:
             ret.append({'points':ca.points, 'name': ca.name, 'college': ca.college})
 
-        return JsonResponse(ret)
+        return JsonResponse({'context': ret})
 
 
 
