@@ -69,7 +69,6 @@ def get_points(request):
 
 @api_view(['GET'])
 def get_top_ten(request):
-    if hasattr(request, 'firebase_user') and request.firebase_user:
         cas = CA.objects.order_by('-points')[:9]
         ret = []
         for ca in cas:
@@ -77,8 +76,6 @@ def get_top_ten(request):
 
         return JsonResponse(ret)
 
-    else:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CACreateViewSet(viewsets.ModelViewSet):
