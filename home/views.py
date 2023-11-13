@@ -69,7 +69,7 @@ def get_points(request):
 
 @api_view(['GET'])
 def get_top_ten(request):
-        cas = CA.objects.order_by('-points')[:9]
+        cas = CA.objects.order_by('-points')[:10]
         ret = []
         for ca in cas:
             ret.append({'points':ca.points, 'name': ca.name, 'college': ca.college})
